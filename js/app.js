@@ -1,59 +1,58 @@
-(function(){
-    const customerImage = document.querySelector('#customer-img')
-    const customerName = document.querySelector('#customer-name')
-    const customerText = document.querySelector('#customer-text')
-    const buttons = document.querySelectorAll('.btn')
-    let index = 0
-    const customers = []
+const img = document.querySelector('img');
+const custName = document.getElementById('customer-name');
+const custTxt = document.getElementById('customer-text');
+const prevBtn = document.querySelector('.prevBtn');
+const nextBtn = document.querySelector('.nextBtn');
 
-    //Create a new customer using a customer constructor
-    
-    //Customer Constructor
-    function Customer(img, name, text) {
-        this.img = img
-        this.name = name
-        this.text = text
+const customer = [
+    {
+        name: 'Rajeve',
+        image: 'customer-0',
+        text: 'This is a beautiful world we are living in.'
+    },
+    {
+        name: 'Jake',
+        image: 'customer-1',
+        text: 'Hello my name is jake here is some random text.'
+    },
+    {
+        name: 'Jill',
+        image: 'customer-2',
+        text: 'Some more random text by Jill.'
+    },
+    {
+        name: 'Jack',
+        image: 'customer-3',
+        text: 'I am alive and free.'
+    },
+    {
+        name: 'Bill',
+        image: 'customer-4',
+        text: 'The ruler of the world.'
+    },
+]
+
+let counter = 0;
+
+function testimonial(index) {
+    if (index < 0) {
+        counter = customer.length - 1;
+    } else if (index >= customer.length) {
+        counter = 0;
     }
+    custName.textContent = customer[counter].name;
+    custTxt.textContent = customer[counter].text;
+    img.src = `img/${customer[counter].image}.jpg`;
+}
 
-    //Create new customer using the constructor function
+prevBtn.addEventListener('click', () => {
+    counter --
+    testimonial(counter);
+})
 
-    function createCustomer(img, name, text) {
+nextBtn.addEventListener('click', () => {
+    counter ++
+    testimonial(counter);
+})
 
-        let fullImg = `./img/customer-${img}.jpg`
-        let customer = new Customer(fullImg, name, text)
-
-        customers.push(customer)
-    }
-
-    
-    createCustomer(0, 'John', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis neque reprehenderit laborum, corporis explicabo assumenda. Porro impedit consectetur animi, reprehenderit recusandae sapiente at aliquam reiciendis modi ipsam rerum suscipit distinctio?')
-    createCustomer(1, 'Sandy', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock')
-    createCustomer(2, 'Amy', 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don\'t look even slightly believable.')
-    createCustomer(3, 'Tyrell', 'If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text.')
-    createCustomer(4, 'Wanda', 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.')
-    
-
-    buttons.forEach(function(button){
-        button.addEventListener('click', function(e){
-            if (e.target.parentElement.classList.contains('prevBtn')){
-               if(index === 0){
-                    index = customers.length
-               }
-               index--
-               customerImage.src = customers[index].img
-               customerName.textContent = customers[index].name
-               customerText.textContent = customers[index].text
-            }
-            if (e.target.parentElement.classList.contains('nextBtn')){
-                index++
-                if(index === customers.length){
-                     index = 0
-                }
-                customerImage.src = customers[index].img
-                customerName.textContent = customers[index].name
-                customerText.textContent = customers[index].text
-             }
-        })
-    })
-    
-})()
+testimonial(counter);
